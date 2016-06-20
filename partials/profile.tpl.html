@@ -1,0 +1,61 @@
+<md-button class="md-fab md-accent md-fab-bottom-right"
+           aria-label="Save" ng-click="$ctrl.save()"
+           ng-disabled="$ctrl.profileForm.$invalid">
+  <md-tooltip md-direction="top">Save</md-tooltip>
+  <i class="material-icons">save</i>
+</md-button>
+
+<md-content>
+  <md-card class="md-whiteframe-5dp">
+    <md-card-content>
+      <h2>Edit profile</h2>
+      <form name="$ctrl.profileForm">
+        <md-input-container class="md-block">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" ng-model="$ctrl.profile.name" required />
+          <div ng-messages="$ctrl.profileForm.name.$error" role="alert">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" ng-model="$ctrl.profile.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" required>
+          <div ng-messages="$ctrl.profileForm.email.$error" role="alert">
+            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+              Your email must be between 10 and 100 characters long and look like an e-mail address.
+            </div>
+          </div>
+        </md-input-container>
+
+        <div layout-gt-xs="row">
+          <div>
+            <md-datepicker id="dob" name="dob" ng-model="$ctrl.profile.dob" md-placeholder="Enter birthdate" md-min-date="$ctrl.minDate" md-max-date="$ctrl.maxDate" ng-change="$ctrl.calcAge($ctrl.profile.dob)" required></md-datepicker>
+            <div class="validation-messages" ng-messages="$ctrl.profileForm.dob.$error" role="alert">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+              <div ng-message="mindate">Date is too early!</div>
+              <div ng-message="maxdate">Date is too late!</div>
+            </div>
+          </div>
+          <div flex></div>
+          <md-input-container class="md-block">
+            <label for="age">Age</label>
+            <input type="number" step="any" id="age" name="age" ng-model="$ctrl.profile.age" min="3" max="150" disabled />
+            <div class="hint">years</div>
+            <div ng-messages="projectForm.rate.$error" multiple md-auto-hide="false">
+
+              <div ng-message="min">
+                You are so young.
+              </div>
+              <div ng-message="max">
+                You are so old.
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+
+      </form>
+   </md-card-content>
+  </md-card>
+</md-content>

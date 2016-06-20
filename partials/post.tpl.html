@@ -1,0 +1,54 @@
+<md-button class="md-fab md-accent md-fab-bottom-right"
+           aria-label="Save" ng-click="$ctrl.save()"
+           ng-disabled="$ctrl.postForm.$invalid">
+  <md-tooltip md-direction="top">Save</md-tooltip>
+  <i class="material-icons">save</i>
+</md-button>
+
+<md-content>
+  <md-card class="md-whiteframe-5dp">
+    <md-card-content>
+      <h2 ng-show="$ctrl.isNew">New post</h2>
+      <h2 ng-hide="$ctrl.isNew">Edit post {{ ::$ctrl.post.title }}</h2>
+      <form name="$ctrl.postForm">
+        <md-input-container class="md-block">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" ng-model="$ctrl.post.title" required />
+          <div ng-messages="$ctrl.postForm.title.$error" role="alert">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" ng-model="$ctrl.post.description" rows="5" required></textarea>
+          <div ng-messages="$ctrl.postForm.description.$error" role="alert">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <div layout-gt-xs="row">
+          <div>
+            <md-datepicker id="date" name="date" ng-model="$ctrl.post.date" ng-disabled="!$ctrl.isNew" ng-change="$ctrl.checkIfFuture()" md-placeholder="Enter post date" md-max-date="$ctrl.maxDate" required></md-datepicker>
+            <div class="validation-messages" ng-messages="$ctrl.postForm.date.$error" role="alert">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+              <div ng-message="maxdate">Date is too late!</div>
+            </div>
+          </div>
+          <div>
+            <md-input-container class="md-block" style="margin-top: 10px;">
+              <input type="time" id="time" name="time" ng-model="$ctrl.post.time" ng-disabled="!$ctrl.isNew" ng-change="$ctrl.timeChanged()" mdp-format="HH:mm A" mdp-time-picker required />
+            </md-input-container>
+            <div class="validation-messages" role="alert">
+              <div ng-show="$ctrl.postForm.time.$error.timeInvalid">The entered value is not a time!</div>
+              <div ng-show="!$ctrl.post.time">This time is required!</div>
+              <div ng-show="$ctrl.postForm.time.$error.timeTooMuch">Time is too late!</div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+   </md-card-content>
+  </md-card>
+</md-content>

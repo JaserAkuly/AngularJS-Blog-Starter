@@ -1,0 +1,41 @@
+<md-button class="md-fab md-primary md-fab-bottom-right"
+           aria-label="Add" ui-sref="app.post">
+  <md-tooltip md-direction="top">Add</md-tooltip>
+  <i class="material-icons">add</i>
+</md-button>
+
+<md-content>
+  <md-card class="md-whiteframe-5dp" ng-hide="$ctrl.posts.length"
+           md-colors="::{ background: 'red' }"
+           layout="row" layout-wrap layout-align="center center" layout-padding>
+    No posts yet.
+    <md-button class="md-warn" md-colors="::{ background: 'amber' }" ui-sref="app.post">
+      Add post?
+    </md-button>
+  </md-card>
+  <md-card class="md-whiteframe-5dp" ng-show="$ctrl.posts.length"
+           ng-repeat="post in $ctrl.posts | orderBy: '-dateTime' track by $index">
+    <div layout="row">
+      <div layout="column" flex>
+        <md-card-content>
+          <h2 ng-bind="post.title"></h2>
+          <p ng-bind="post.description"></p>
+       </md-card-content>
+       <md-card-footer>
+          <div layout="row">
+            <div flex></div>
+            <div layout="column">
+              <small>{{post.id}}
+                <i ng-bind="post.dateTime | date: 'M/dd/yyyy HH:mm a'"></i>
+              </small>
+            </div>
+          </div>
+        </md-card-footer>
+      </div>
+      <md-button layout="column" class="md-icon-button md-primary"
+                 aria-label="Edit" ui-sref="app.post({ id: post.id })">
+        <i class="material-icons">create</i>
+      </md-button>
+    </div>
+  </md-card>
+</md-content>
